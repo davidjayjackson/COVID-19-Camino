@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 on the Camino: CAMINO and CAMINO"
+title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
 date: "3/31/2020"
 output: html_document
