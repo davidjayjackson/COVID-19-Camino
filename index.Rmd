@@ -1,0 +1,48 @@
+---
+title: "COVID-19 on the Camino: Spain and Portugal"
+author: "David J Jackson"
+date: "3/31/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(RSQLite)
+```
+```{r,echo=FALSE}
+db <- dbConnect(SQLite(), dbname="../db/CORVID.sqlite3")
+ECDC <- dbGetQuery(db,"select Reported,Countries,Cases,Deaths from ECDC")
+ECDC$Reported <- as.Date(ECDC$Reported)
+ECDC$DeathRate <- ECDC$Deaths/ECDC$Cases
+SPAIN <- ECDC %>% filter(Countries=="Spain")
+PORTUGAL <- ECDC %>% filter(Countries=="Portugal")
+
+```
+
+### Spain's Fight with COVID-19 
+
+```{r,echo=FALSE}
+SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
+  labs(title="TOtal Cases: Spain's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
+
+SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
+  labs(title="Total Deaths: Spain's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
+
+SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
+  labs(title="Rate of Deaths: Spain's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
+```
+
+### Portugal's Fight with COVID-19 
+
+```{r,echo=FALSE}
+PORTUGAL %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
+  labs(title="TOtal Cases: Portugal's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
+
+PORTUGAL %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
+  labs(title="Total Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
+
+PORTUGAL%>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
+  labs(title="Rate of Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
+```
+
