@@ -24,7 +24,7 @@ PORTUGAL <- ECDC %>% filter(Countries=="Portugal")
 
 ```{r,echo=FALSE}
 SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
-  labs(title="TOtal Cases: Spain's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
+  labs(title="Total Cases: Spain's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
 
 SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
   labs(title="Total Deaths: Spain's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
@@ -37,7 +37,7 @@ SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
 
 ```{r,echo=FALSE}
 PORTUGAL %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
-  labs(title="TOtal Cases: Portugal's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
+  labs(title="Total Cases: Portugal's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
 
 PORTUGAL %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
   labs(title="Total Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
