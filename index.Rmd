@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 on the Camino: Spain and Portugal"
+title: "COVID-19 on the Camino: CAMINO and CAMINO"
 author: "David J Jackson"
 date: "3/31/2020"
 output: html_document
@@ -11,38 +11,76 @@ library(tidyverse)
 library(RSQLite)
 ```
 ```{r,echo=FALSE}
+rm(list=ls())
 db <- dbConnect(SQLite(), dbname="../db/CORVID.sqlite3")
 ECDC <- dbGetQuery(db,"select Reported,Countries,Cases,Deaths from ECDC")
 ECDC$Reported <- as.Date(ECDC$Reported)
 ECDC$DeathRate <- ECDC$Deaths/ECDC$Cases
-SPAIN <- ECDC %>% filter(Countries=="Spain")
-PORTUGAL <- ECDC %>% filter(Countries=="Portugal")
+CAMINO <- ECDC %>% filter(Countries=="Spain" |Countries=="Portugal")
+## JHU Data
+JHUDATA <- dbGetQuery(db,"select date,country,confirmed,deaths,recovered from JHUDATA")
+JHUDATA$date <- as.Date(JHUDATA$date)
+JHUDATA$DeathRate <- JHUDATA$deaths/JHUDATA$confirmed
+BURGOS<- JHUDATA %>% filter(country=="Spain" |country=="Portugal")
+
 
 ```
 
-### Spain's Fight with COVID-19 
+### Spain's Fight with COVID-19 (Daily Totals)
 
 ```{r,echo=FALSE}
-SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
+CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
   labs(title="Total Cases: Spain's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
 
-SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
+CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
   labs(title="Total Deaths: Spain's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
 
-SPAIN %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
+CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
   labs(title="Rate of Deaths: Spain's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
 ```
 
-### Portugal's Fight with COVID-19 
+### Portugal's Fight with COVID-19 (Daily Totals)
 
 ```{r,echo=FALSE}
-PORTUGAL %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
+CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
   labs(title="Total Cases: Portugal's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
 
-PORTUGAL %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
+CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
   labs(title="Total Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
 
-PORTUGAL%>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
+CAMINO%>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
   labs(title="Rate of Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
+```
+
+
+### Spain's Fight with COVID-19 Accumulated Totals (From Jan. 1,2020)
+
+```{r,echo=FALSE}
+PORTA <- BURGOS %>% filter(country =="Spain")
+PORTA %>% ggplot() + geom_col(aes(x=date,y=confirmed)) +
+  labs(title="Total Cases: Spain's fight with COVID-19",x="Date Reported",y="Total Cases To Date")
+
+PORTA %>% ggplot() + geom_col(aes(x=date,y=deaths)) +
+  labs(title="Total Deaths: Spain's fight with COVID-19",x="Date Reported",y="Total  Deaths To Date")
+
+PORTA %>% ggplot() + geom_col(aes(x=date,y=DeathRate)) +
+  labs(title="Rate of Deaths: Spain's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
+```
+
+### Portugal's Fight with COVID-19 Accumulated Totals (From Jan. 1,2020)
+
+```{r,echo=FALSE}
+BURGOS <- BURGOS %>% filter(country=="Portugal") 
+BURGOS %>% ggplot() + geom_col(aes(x=date,y=confirmed)) +
+  labs(title="Total Cases: Portugal's fight with COVID-19",x="Date Reported",y="Total Cases Reported to Date")
+
+BURGOS %>% ggplot() + geom_col(aes(x=date,y=deaths)) +
+  labs(title="Total Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
+
+BURGOS %>% ggplot() + geom_col(aes(x=date,y=DeathRate)) +
+  labs(title="Rate of Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
+```
+```{r}
+dbDisconnect(db)
 ```
 
