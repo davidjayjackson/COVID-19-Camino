@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
-date: "Apr. 10, 2020 03:45PM EDT"
+date: "Apr. 11, 2020 03:PM EDT"
 output: html_document
 ---
 
@@ -12,7 +12,7 @@ library(RSQLite)
 ```
 ```{r,echo=FALSE}
 rm(list=ls())
-db <- dbConnect(SQLite(), dbname="../db/CORVID.sqlite3")
+db <- dbConnect(SQLite(), dbname="../COVIDDB//CORVID.sqlite3")
 ECDC <- dbGetQuery(db,"select Reported,Countries,Cases,Deaths from ECDC")
 ECDC$Reported <- as.Date(ECDC$Reported)
 ECDC$DeathRate <- ECDC$Deaths/ECDC$Cases
