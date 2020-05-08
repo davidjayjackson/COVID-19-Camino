@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
-date: "May 7,  2020 3:00 PM EDT"
+date: "May 8,  2020 5:45 PM EDT"
 output: html_document
 ---
 
@@ -17,7 +17,12 @@ ECDC <- dbGetQuery(db,"select Reported,Countries,Cases,Deaths from ECDC")
 ECDC$Reported <- as.Date(ECDC$Reported)
 ECDC$DeathRate <- ECDC$Deaths/ECDC$Cases
 CAMINO <- ECDC %>% filter(Countries=="Spain" |Countries=="Portugal")
-## JHU Data
+# CAMINO$Cases <- ifelse(CAMINO$Cases ==-2461.0",2461,CAMINO$Cases)
+# CAMINO$Cases <- ifelse(CAMINO$Cases =="-1430.0",1430,CAMINO$Cases)
+# CAMINO$Cases <- ifelse(CAMINO$Cases =="-161.0",161,CAMINO$Cases)
+# CAMINO$Cases <- ifelse(CAMINO$Cases =="-105.0",105,CAMINO$Cases)
+# CAMINO$Cases <- ifelse(CAMINO$Cases =="-9",9,CAMINO$Cases)
+## JHU Dat
 JHUDATA <- dbGetQuery(db,"select date,country,confirmed,deaths,recovered from JHUDATA")
 JHUDATA$date <- as.Date(JHUDATA$date)
 JHUDATA$DeathRate <- JHUDATA$deaths/JHUDATA$confirmed
