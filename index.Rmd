@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
-date: "May 13,  2020 2:40 PM EDT"
+date: "May 14,  2020 2:35 PM EDT"
 output: html_document
 ---
 
