@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
-date: "May 26,  2020 1:45 PM EDT"
+date: "May 27,2020 2:20 PM EDT"
 output: html_document
 ---
 
@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(RSQLite)
+library(plotly)
 ```
 ```{r,echo=FALSE}
 rm(list=ls())
@@ -29,14 +30,18 @@ BURGOS<- JHUDATA %>% filter(country=="Spain" |country=="Portugal" )
 ### Spain's Fight with COVID-19 (Daily Totals)
 
 ```{r,echo=FALSE}
-CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
+C_1 <- CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
   labs(title="Total Cases: Spain's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
 
-CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
+C_2 <-CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
   labs(title="Total Deaths: Spain's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
 
-CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
-  labs(title="Rate of Deaths: Spain's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
+C_3 <- CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
+  labs(title="Rate of Deaths: Spain's fight with COVID-19",x="Date Reported",y="Death RAte (%)") 
+ggplotly(C_1)
+ggplotly(C_2)
+ggplotly(C_3)
+
 ```
 
 ### Portugal's Fight with COVID-19 (Daily Totals)
