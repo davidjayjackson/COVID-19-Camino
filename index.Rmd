@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
-date: "June 2, 2020 17:20 UD/UT"
+date: "June 3, 2020 20:30 UD/UT"
 output: html_document
 ---
 
@@ -18,7 +18,8 @@ ECDC <- dbGetQuery(db,"select Reported,Countries,Cases,Deaths from ECDC")
 ECDC <- ECDC %>% filter(Cases >=0,Deaths>=0)
 ECDC$Reported <- as.Date(ECDC$Reported)
 ECDC$DeathRate <- ECDC$Deaths/ECDC$Cases
-CAMINO <- ECDC %>% filter(Countries=="Spain" |Countries=="Portugal" )
+CAMINO <- ECDC %>% filter(Countries=="Spain" )
+LEON <- ECDC %>% filter(Countries=="Portugal" )
 ## JHU Dat
 JHUDATA <- dbGetQuery(db,"select date,country,confirmed,deaths,recovered from JHUDATA")
 JHUDATA$date <- as.Date(JHUDATA$date)
@@ -48,13 +49,13 @@ ggplotly(C_3)
 ### Portugal's Fight with COVID-19 (Daily Totals)
 
 ```{r,echo=FALSE}
-CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
+LEON %>% ggplot() + geom_col(aes(x=Reported,y=Cases)) +
   labs(title="Total Cases: Portugal's fight with COVID-19",x="Date Reported",y="Total Cases Reported")
 
-CAMINO %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
+LEON %>% ggplot() + geom_col(aes(x=Reported,y=Deaths)) +
   labs(title="Total Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Total Deaths Reported")
 
-CAMINO%>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
+LEON %>% ggplot() + geom_col(aes(x=Reported,y=DeathRate)) +
   labs(title="Rate of Deaths: Portugal's fight with COVID-19",x="Date Reported",y="Death RAte (%)")
 ```
 
