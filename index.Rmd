@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 on the Camino: Spain and Portugal"
 author: "David J Jackson"
-date: "June 16, 2020 15:35 UD/UT"
+date: "June 17, 2020 17:19 UD/UT"
 output: html_document
 ---
 
