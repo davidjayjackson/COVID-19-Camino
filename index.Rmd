@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 options(scipen=5)
 library(RSQLite)
 ```
+###
+
 ```{r}
 rm(list=ls())
 source("../DATA/movavg.R")
