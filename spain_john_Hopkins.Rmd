@@ -1,0 +1,48 @@
+---
+title: 'Spain: Analizing COVID-19 w/ John Hopkin''s'
+author: "David Jackson"
+date: "8/17/2020"
+output: 
+  html_document: 
+    fig_width: 9
+    fig_height: 7
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RSQLite)
+```
+```{r}
+rm(list=ls())
+source("../DATA/movavg.R")
+db <- db <- dbConnect(RSQLite::SQLite(),dbname= "../COVIDDB/COVID.sqlite3")
+df <- dbGetQuery(db,"select * from JHUDATA")
+df <- subset(df,country =="Spain" & confirmed >0 )
+df$date <- as.Date(df$date)
+str(df)
+```
+
+### Spain's COVID-19 Cases and Deaths : John Hopkin's data
+
+
+```{r}
+plot(df$date,df$confirmed,type="l",main="Spains's CIVID-19 Cases")
+grid(col="black")
+plot(df$date,df$deaths,type="l",main="Spains's CIVID-19 Deths")
+grid(col="black")
+```
+### Calc and Plot Daily Cases and Deaths
+
+```{r}
+daily_covid <- read.csv("./spain_daily.csv")
+daily_covid$date <- as.Date(daily_covid$date)
+```
+```{r}
+plot(daily_covid$date,daily_covid$daily_cases,main="Spain's Daily Cases",type="b")
+grid(col="black")
+plot(daily_covid$date,daily_covid$daily_deaths,main="Spain's Daily Deaths",type="b")
+grid(col="black")
+```
+
+
+
