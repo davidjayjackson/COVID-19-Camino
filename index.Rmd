@@ -1,7 +1,7 @@
 ---
 title: "Spains's Battle with COVID-19"
 author: "David J Jackson"
-date: "09/11/2020"
+date: "09/13/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -36,7 +36,6 @@ lines(US$Reported,US$MA14,col="red")
 grid(col="black")
 ```
 ```{r}
-#US <- subset(df,Reported >="2020-04-01" & Reported <="2020-09-09")
 US$Deaths14 <- movingAverage(US$Deaths,14)
 plot(US$Reported,US$Deaths,type="l",main="COVID-19 Deaths Apr. 1,2020 - Present",
      xlab="Date Reported",ylab="Deaths and 14 day Moving Averges(red)")
@@ -51,7 +50,13 @@ USA <- subset(US,Reported >="2020-06-01")
 USA$MA14 <- movingAverage(USA$Cases,14)
 plot(USA$Reported,USA$Cases,type="l",main=" COVID-19 Cases June. 1,2020 - Sept, 7, 2020",
      xlab="Date Reported",ylab="Cases")
-lines(US$Reported,US$MA14,col="red")
+# lines(USA$Reported,US$MA14,col="red")
+grid(col="black")
+
+USA$MAD <- movingAverage(USA$Deaths,14)
+plot(USA$Reported,USA$Deaths,type="l",main=" COVID-19 Deaths June. 1,2020 - Sept, 7, 2020",
+     xlab="Date Reported",ylab="Deaths")
+#lines(USA$Reported,US$MAD,col="red")
 grid(col="black")
 ```
 
