@@ -1,7 +1,7 @@
 ---
 title: "Spains's Battle with COVID-19"
 author: "David J Jackson"
-date: "09/13/2020"
+date: "09/14/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -18,7 +18,7 @@ rm(list=ls())
 source("../DATA/movavg.R")
 db <- db <- dbConnect(RSQLite::SQLite(),dbname= "../COVIDDB/COVID.sqlite3")
 df <- dbGetQuery(db,"select * from ECDC")
-df <- subset(df,Countries =="Spain" & Cases >0 )
+df <- subset(df,Countries =="Spain"  )
 df$Reported <- as.Date(df$Reported)
 mean(df$Cases)
 mean(df$Deaths)
@@ -38,7 +38,7 @@ grid(col="black")
 ```{r}
 US$Deaths14 <- movingAverage(US$Deaths,14)
 plot(US$Reported,US$Deaths,type="l",main="COVID-19 Deaths Apr. 1,2020 - Present",
-     xlab="Date Reported",ylab="Deaths and 14 day Moving Averges(red)")
+     xlab="Date Reported",ylab="Deaths and 14 day Moving Averges(red)",ylim=c(0,1500))
 lines(US$Reported,US$Deaths14,col="red")
 grid(col="black")
 ```
