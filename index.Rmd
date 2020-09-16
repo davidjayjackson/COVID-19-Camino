@@ -1,7 +1,7 @@
 ---
 title: "Spains's Battle with COVID-19"
 author: "David J Jackson"
-date: "09/15/2020"
+date: "09/16/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -82,7 +82,7 @@ Weekly_Cases$LivedSaved <- Weekly_Cases$Cases * (max(Weekly_Cases$DRate) - Weekl
 barplot(Cases ~Weekly,data=Weekly_Cases,main="Weekly COVOD-19 Cases",xlab="Weekly Date",ylab="Cases")
 grid(col="black")
 barplot(Deaths ~Weekly,data=Weekly_Deaths,main="Weekly COVID-19 Deaths",
-        xlab="Weekly Date",ylab="Deaths",ylim=c(0,6000))
+        xlab="Weekly Date",ylab="Deaths",ylim=c(100,6000))
 grid(col="black")
 
 barplot(DRate ~Weekly,data=Weekly_Cases,main="Weekly Change in Deaths Rates",
