@@ -1,7 +1,7 @@
 ---
 title: ' Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "9/26/2020"
+date: "9/27/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(scales)
 library(RSQLite)
+library(plotly)
 theme_set(theme_linedraw())
 ```
 
@@ -29,26 +30,32 @@ mean(df$Cases)
 mean(df$Deaths)
 ```
 ```{r}
-US <- subset(df,Reported >="2020-04-01")
+US <- subset(df,Reported >="2020-04-01" & Cases >=1)
 US <- US[order(US$Reported,decreasing = TRUE),]
 US$MA14 <- movingAverage(US$Cases,14)
 US$MAD <- movingAverage(US$Deaths,14)
+US$Rate <- US$Deaths/US$Cases
 ```
 
 ### Plot of Daily Cases and Deaths
 
 ```{r}
-ggplot(US) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
+daily_cases <-ggplot(US) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date") +
   geom_line(aes(x=Reported,y=MA14,col="Mov AVg")) +
   geom_point(aes(x=Reported,y=Cases))
-```
-```{r}
-ggplot(US) + geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
+
+daily_deaths <-ggplot(US) + geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date") + ylim(0,1000) +
   geom_line(aes(x=Reported,y=MAD,col="Mov AVg")) +
   geom_point(aes(x=Reported,y=Deaths))
+
+ggplotly(daily_cases)
+ggplotly(daily_deaths)
+
 ```
+
+
 ```{r}
 USA <- subset(US,Reported >="2020-06-01")
 ggplot(USA) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
@@ -56,7 +63,7 @@ ggplot(USA) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   geom_line(aes(x=Reported,y=MA14,col="Mov AVg")) +
   geom_point(aes(x=Reported,y=Cases))
 
-ggplot(USA) + geom_point(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
+ggplot(USA) + geom_col(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date (since Jun. 1, 2020)") + ylim(0,200) +
   geom_line(aes(x=Reported,y=MAD,col="Mov AVg")) 
 ```
@@ -75,7 +82,7 @@ US$Weekly <- as.Date(cut(US$Reported,
 Weekly_Cases <- aggregate(Cases~Weekly,US,FUN=sum)
 Weekly_Deaths <- aggregate(Deaths~Weekly,US,FUN=sum)
 Weekly_Cases$DRate <- Weekly_Deaths$Deaths/Weekly_Cases$Cases
-Weekly_Cases$LivedSaved <- Weekly_Cases$Cases * (max(Weekly_Cases$DRate) - Weekly_Cases$DRate) * 100
+Weekly_Cases$LivedSaved <- Weekly_Cases$Cases * (max(Weekly_Cases$DRate) - Weekly_Cases$DRate) 
 
 ```
 ```{r}
@@ -86,6 +93,7 @@ ggplot(Weekly_Deaths) + geom_col(aes(x=Weekly,y=Deaths)) +
   labs(title="Weekly Deaths",x="Date Reported", y="Weekly Deaths") +
    ylim(0,6000)
 ``` 
+
 
 #### Monthly Cases and Deaths
 
