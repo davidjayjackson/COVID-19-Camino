@@ -1,7 +1,7 @@
 ---
 title: ' Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "9/28/2020"
+date: "9/29/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -35,6 +35,15 @@ US <- US[order(US$Reported,decreasing = TRUE),]
 US$MA14 <- movingAverage(US$Cases,14)
 US$MAD <- movingAverage(US$Deaths,14)
 US$Rate <- US$Deaths/US$Cases
+```
+
+### Spain COVID19 Mortality Rate
+
+```{r}
+ggplot(US) + geom_line(aes(x=Reported,y=Rate)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title="Spain COVID19 Mortality Rate ",x="Date Reported",y="Mortality Rate") +ylim(0,0.6)
+
 ```
 
 ### Plot of Daily Cases and Deaths
