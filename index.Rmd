@@ -40,9 +40,11 @@ US$Rate <- US$Deaths/US$Cases
 ### Spain COVID19 Mortality Rate
 
 ```{r}
-ggplot(US) + geom_line(aes(x=Reported,y=Rate)) +
+A <- subset(US,Reported >="2020-07-01")
+ggplot(A) + geom_line(aes(x=Reported,y=Rate)) +
   scale_y_continuous(labels = scales::percent) +
-  labs(title="Spain COVID19 Mortality Rate ",x="Date Reported",y="Mortality Rate")
+  labs(title="Spain COVID19 Mortality Rate ",x="Date Reported",y="Mortality Rate") +
+  geom_hline(yintercept = mean(A$Rate),col="red")
 
 ```
 
