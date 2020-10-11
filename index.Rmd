@@ -1,7 +1,7 @@
 ---
 title: ' Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "10/09/2020"
+date: "10/10/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -44,7 +44,8 @@ A <- subset(US,Reported >="2020-07-01")
 ggplot(A) + geom_line(aes(x=Reported,y=Rate)) +
   scale_y_continuous(labels = scales::percent) +
   labs(title="Spain COVID19 Mortality Rate ",x="Date Reported",y="Mortality Rate") +
-  geom_hline(yintercept = mean(A$Rate),col="red")
+  geom_hline(yintercept = mean(A$Rate),col="red") +
+  geom_smooth(aes(x=Reported,y=Rate,col="Loess"),span=0.25)
 
 ```
 
@@ -53,12 +54,12 @@ ggplot(A) + geom_line(aes(x=Reported,y=Rate)) +
 ```{r}
 daily_cases <-ggplot(US) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date") +
-  geom_line(aes(x=Reported,y=MA14,col="Mov AVg")) +
-  geom_point(aes(x=Reported,y=Cases))
+  geom_point(aes(x=Reported,y=Cases)) +
+  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25)
 
 daily_deaths <-ggplot(US) + geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date") + ylim(0,1000) +
-  geom_line(aes(x=Reported,y=MAD,col="Mov AVg")) +
+  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"), span=0.25) +
   geom_point(aes(x=Reported,y=Deaths))
 
 ggplotly(daily_cases)
@@ -71,12 +72,12 @@ ggplotly(daily_deaths)
 USA <- subset(US,Reported >="2020-06-01")
 ggplot(USA) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date since Jun. 1, 2020") +
-  geom_line(aes(x=Reported,y=MA14,col="Mov AVg")) +
+  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25) +
   geom_point(aes(x=Reported,y=Cases))
 
-ggplot(USA) + geom_col(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
+ggplot(USA) + geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date (since Jun. 1, 2020)") + ylim(0,200) +
-  geom_line(aes(x=Reported,y=MAD,col="Mov AVg")) 
+  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"),span=0.25)
 ```
 
 #### Non-Moving Average By Week and By Month
