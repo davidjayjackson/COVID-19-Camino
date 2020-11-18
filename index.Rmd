@@ -41,7 +41,7 @@ US$Rate <- US$Deaths/US$Cases
 
 ```{r}
 A <- subset(US,Reported >="2020-07-01")
-ggplot(A) + geom_line(aes(x=Reported,y=Rate)) +
+ggplot(A) + # geom_line(aes(x=Reported,y=Rate)) +
   scale_y_continuous(labels = scales::percent) +
   labs(title="Spain COVID19 Mortality Rate ",x="Date Reported",y="Mortality Rate") +
   geom_hline(yintercept = mean(A$Rate),col="red") +
@@ -52,15 +52,14 @@ ggplot(A) + geom_line(aes(x=Reported,y=Rate)) +
 ### Plot of Daily Cases and Deaths
 
 ```{r}
-daily_cases <-ggplot(US) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
+daily_cases <-ggplot(US) +  # geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date") +
-  geom_point(aes(x=Reported,y=Cases)) +
-  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25)
+    geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25)
 
-daily_deaths <-ggplot(US) + geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
+daily_deaths <-ggplot(US) + # geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date") + ylim(0,1000) +
-  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"), span=0.25) +
-  geom_point(aes(x=Reported,y=Deaths))
+  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"), span=0.25) 
+  
 
 ggplotly(daily_cases)
 ggplotly(daily_deaths)
@@ -70,12 +69,13 @@ ggplotly(daily_deaths)
 
 ```{r}
 USA <- subset(US,Reported >="2020-06-01")
-ggplot(USA) + geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
+ggplot(USA) + # geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date since Jun. 1, 2020") +
-  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25) +
-  geom_point(aes(x=Reported,y=Cases))
-
-ggplot(USA) + geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
+  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25) 
+  
+```
+```{r}
+ggplot(USA) + # geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date (since Jun. 1, 2020)") + ylim(0,200) +
   geom_smooth(aes(x=Reported,y=Deaths,col="Loess"),span=0.25)
 ```
