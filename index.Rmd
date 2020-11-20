@@ -1,7 +1,7 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "11/19/2020"
+date: "11/20/2020"
 output: 
   html_document: 
     fig_width: 9
@@ -45,7 +45,8 @@ ggplot(A) + # geom_line(aes(x=Reported,y=Rate)) +
   scale_y_continuous(labels = scales::percent) +
   labs(title="Spain COVID19 Mortality Rate ",x="Date Reported",y="Mortality Rate") +
   geom_hline(yintercept = mean(A$Rate),col="red") +
-  geom_smooth(aes(x=Reported,y=Rate,col="Loess"),span=0.25)
+  geom_smooth(aes(x=Reported,y=Rate,col="Loess"),span=0.25) +
+  scale_alpha_date()
 
 ```
 
@@ -54,11 +55,13 @@ ggplot(A) + # geom_line(aes(x=Reported,y=Rate)) +
 ```{r}
 daily_cases <-ggplot(US) +  # geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date") +
-    geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25)
+    geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25) +
+   scale_alpha_date()
 
 daily_deaths <-ggplot(US) + # geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date") + ylim(0,1000) +
-  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"), span=0.25) 
+  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"), span=0.25) +
+   scale_alpha_date()
   
 
 ggplotly(daily_cases)
@@ -71,13 +74,15 @@ ggplotly(daily_deaths)
 USA <- subset(US,Reported >="2020-06-01")
 ggplot(USA) + # geom_line(aes(x=Reported,y=Cases,col="Daily Cases")) +
   labs(title="COVID-19 Cases by Date since Jun. 1, 2020") +
-  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25) 
+  geom_smooth(aes(x=Reported,y=Cases,col="Loess"),span=0.25) +
+   scale_alpha_date()
   
 ```
 ```{r}
 ggplot(USA) + # geom_line(aes(x=Reported,y=Deaths,col="Daily Deaths")) +
   labs(title="COVID-19 Deaths by Date (since Jun. 1, 2020)") + ylim(0,200) +
-  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"),span=0.25)
+  geom_smooth(aes(x=Reported,y=Deaths,col="Loess"),span=0.25) +
+   scale_alpha_date()
 ```
 
 #### Non-Moving Average By Week and By Month
@@ -99,11 +104,12 @@ Weekly_Cases$LivedSaved <- Weekly_Cases$Cases * (max(Weekly_Cases$DRate) - Weekl
 ```
 ```{r}
 ggplot(Weekly_Cases) + geom_col(aes(x=Weekly,y=Cases)) + 
-  labs(title="Weekly Cases",x="Date Reported", y="Weekly Cases")
+  labs(title="Weekly Cases",x="Date Reported", y="Weekly Cases") +
+   scale_alpha_date()
 
 ggplot(Weekly_Deaths) + geom_col(aes(x=Weekly,y=Deaths)) + 
   labs(title="Weekly Deaths",x="Date Reported", y="Weekly Deaths") +
-   ylim(0,6000)
+   ylim(0,6000) +  scale_alpha_date()
 ``` 
 
 
@@ -119,8 +125,10 @@ Monthly_Cases$LivedSaved <- Monthly_Cases$Cases * (max(Monthly_Cases$DRate) - Mo
 ```{r}
 ggplot(Monthly_Cases) + geom_col(aes(x=Monthly,y=Cases)) +
   labs(title="Monthly Cases") +
-  scale_y_continuous(labels=scales::comma)
+  scale_y_continuous(labels=scales::comma) +
+   scale_alpha_date()
 
 ggplot(Monthly_Deaths) + geom_col(aes(x=Monthly,y=Deaths)) +
-  labs(title="Monthly Deaths")
+  labs(title="Monthly Deaths") +
+   scale_alpha_date()
 ```
