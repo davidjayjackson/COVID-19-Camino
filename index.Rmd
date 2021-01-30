@@ -1,7 +1,7 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "2021-01-29 12:30 PM/EST"
+date: "2021-01-30 6:25 PM/EST"
 output: 
   html_document: 
     fig_width: 9
@@ -14,6 +14,7 @@ library(ggplot2)
 library(scales)
 library(RSQLite)
 library(plotly)
+library(forecast)
 theme_set(theme_linedraw())
 ```
 
@@ -34,8 +35,8 @@ sum(df$new_deaths,na.rm=TRUE)
 ```{r}
 US <- subset(df,date >="2020-04-01" & new_cases >=1)
 US <- US[order(US$date,decreasing = TRUE),]
-US$MAC <- movingAverage(US$new_cases,7)
-US$MAD <- movingAverage(US$new_deaths,7)
+US$MAC <- ma(US$new_cases,7,centre=TRUE)
+US$MAD <- ma(US$new_deaths,7,centre=TRUE)
 US$Rate <- US$new_deaths/US$new_cases
 ```
 
@@ -57,15 +58,15 @@ ggplot(A) + # geom_line(aes(x=date,y=Rate)) +
 ```{r}
 daily_new_cases <-ggplot(US) + 
   labs(title="COVID-19 new_cases by Date",y="Cases") +
-    geom_line(aes(x=date,y=MAC,col="Mov Average")) +
-   scale_alpha_date()
+    geom_col(aes(x=date,y=MAC,col="Mov Average")) +
+   geom_line(aes(x=date,y=new_cases,col="Daily Cases"))
 ggplotly(daily_new_cases)
 
 
 daily_new_deaths <-ggplot(US) + 
   labs(title="COVID-19 new_deaths by Date",col="Deaths",y="Deaths") + ylim(0,1000) +
-  geom_line(aes(x=date,y=MAD,col="Mov. Average")) +
-   scale_alpha_date()
+  geom_col(aes(x=date,y=MAD,col="Mov. Average")) +
+   geom_line(aes(x=date,y=new_deaths,col="Daily Deaths"))
  ggplotly(daily_new_deaths)
 
 ```
