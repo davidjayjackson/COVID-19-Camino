@@ -1,7 +1,7 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "2021-02-01 2:05 PM/EST"
+date: "2021-02-02 10:25 PM/EST"
 output: 
   html_document: 
     fig_width: 9
@@ -49,21 +49,44 @@ vac <- dbGetQuery(db,"select * from OWID where location = 'Spain'")
 vac$date <- as.Date(vac$date)
 vac <- vac[order(vac$date),]
 vac <- vac %>%select(date,location,iso_code,new_vaccinations,
-                    new_vaccinations_smoothed,total_vaccinations,population) %>%
+                    total_vaccinations,population,
+                    people_vaccinated,people_fully_vaccinated
+
+) %>%
                     na.omit()
 summary(vac$new_vaccinations)
 ```
 
+### Doses Administered 
+
 ```{r}
 p5 <- ggplot(vac) + geom_line(aes(x=date,y=new_vaccinations)) +
   scale_y_continuous(labels=comma) +
-  labs(title="Spain's New Vaccinations By Date") +
-  geom_smooth(aes(x=date,y=new_vaccinations))
+  labs(title="Spain's Daily Doses By Date") 
+ # geom_smooth(aes(x=date,y=new_vaccinations))
+ggplotly(p5)
 ```
 ```{r}
 p6 <- ggplot(vac) + geom_line(aes(x=date,y=total_vaccinations)) +
   scale_y_continuous(labels=comma) +
-  labs(title="Spain's Total Vaccinations By Date") 
+  labs(title="Spain's Total (Full) Doses Date") 
+ggplotly(p6)
+```
+
+### People Vaccinated
+
+```{r}
+p5 <- ggplot(vac) + geom_line(aes(x=date,y=people_vaccinated)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Spain's Number of People Vaccinatations By Date") 
+ #  geom_smooth(aes(x=date,y=))
+ggplotly(p5)
+```
+```{r}
+p6 <- ggplot(vac) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Spain's Total  Number of People Fully Vaccinated By Date") 
+ggplotly(p6)
 
 ```
 
@@ -72,8 +95,6 @@ vac$Rate <- vac$total_vaccinations/vac$population
 p7 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) + 
     scale_y_continuous(labels=percent) +  ylim(0,0.5) +
   labs(title="Spain's vaccination Rate By Day")
-ggplotly(p5)
-ggplotly(p6)
 ggplotly(p7)
 
 ```
