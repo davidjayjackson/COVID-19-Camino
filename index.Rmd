@@ -1,7 +1,7 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "2021-02-02 10:25 PM/EST"
+date: "2021-02-03 03:45 PM/EST"
 output: 
   html_document: 
     fig_width: 9
@@ -17,6 +17,7 @@ library(plotly)
 library(forecast)
 theme_set(theme_linedraw())
 ```
+
 ## VAccination Report
 
 
@@ -54,7 +55,8 @@ vac <- vac %>%select(date,location,iso_code,new_vaccinations,
 
 ) %>%
                     na.omit()
-summary(vac$new_vaccinations)
+summary(vac$speople_vaccinated)
+summary(vac$people_fully_vaccinated)
 ```
 
 ### Doses Administered 
