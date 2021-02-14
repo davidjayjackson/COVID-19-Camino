@@ -119,6 +119,8 @@ ggplot(Weekly_new_deaths) + geom_col(aes(x=Weekly,y=new_deaths)) +
 
 #### Monthly new_cases and new_deaths
 
+
+
 ```{r}
 
 Monthly_new_cases <- aggregate(new_cases~Monthly,US,FUN=sum)
