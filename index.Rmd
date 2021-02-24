@@ -1,7 +1,7 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "2021-02-23 4:50 PM/EST"
+date: "2021-02-24 12:00 PM/EST"
 output: 
   html_document: 
     fig_width: 9
