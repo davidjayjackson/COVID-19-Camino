@@ -59,7 +59,7 @@ ggplot(A) + # geom_line(aes(x=date,y=Rate)) +
 ```{r}
 daily_new_cases <-ggplot(US) + 
   labs(title="COVID-19 Cases by Date",y="Cases") +
-    geom_col(aes(x=date,y=MAC,col="Mov Average")) +
+    geom_line(aes(x=date,y=MAC,col="Mov Average")) +
    geom_line(aes(x=date,y=new_cases,col="Daily Cases"))
 ggplotly(daily_new_cases)
 
