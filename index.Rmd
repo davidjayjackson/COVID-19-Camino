@@ -1,7 +1,7 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "2021-04-27 10:55 AM/EDT"
+date: "2021-04-28 12:00 PM/EDT"
 output: 
   html_document: 
     fig_width: 9
@@ -66,7 +66,7 @@ ggplotly(daily_new_cases)
 
 daily_new_deaths <-ggplot(US) + 
   labs(title="COVID-19 Deaths  by Date",col="Deaths",y="Deaths") + ylim(0,1000) +
-  geom_col(aes(x=date,y=MAD,col="Mov. Average")) +
+  geom_line(aes(x=date,y=MAD,col="Mov. Average")) +
    geom_line(aes(x=date,y=new_deaths,col="Daily Deaths"))
  ggplotly(daily_new_deaths)
 
