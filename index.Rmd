@@ -1,9 +1,9 @@
 ---
 title: 'Spain: Battle With COVID-19'
 author: "David Jackson"
-date: "2021-06-24 1:25  PM/EDT"
-output: 
-  html_document: 
+date: "2021-06-25 12:30  PM/EDT"
+output:
+   html_document:
     fig_width: 9
     fig_height: 5
 ---
