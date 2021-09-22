@@ -39,19 +39,18 @@ US$MAC <- ma(US$new_cases,7,centre=TRUE)
 US$MAD <- ma(US$new_deaths,7,centre=TRUE)
 US$Rate <- US$new_deaths/US$new_cases
 ```
-
-### Spain COVID19 Mortality Rate
+### Cases and Deaths by Year
 
 ```{r}
-A <- subset(US,date >="2020-07-01")
-ggplot(A) + # geom_line(aes(x=date,y=Rate)) +
-  scale_y_continuous(labels = scales::percent) +
-  labs(title="Spain COVID19 Mortality Rate ",x="Date date",y="Mortality Rate") +
-  geom_hline(yintercept = mean(A$Rate),col="red") +
-  geom_line(aes(x=date,y=Rate,col="Rolling Mean")) + 
-  geom_smooth(aes(x=date,y=Rate),span=0.25)
-  scale_alpha_date()
+df$Year <- lubridate::year(df$date)
+df$Year <- as.factor(df$Year)
+ggplot(df) + geom_col(aes(x=Year,y=new_cases)) +
+  labs(title = "Covid-19 Cases By Year") +
+  scale_y_continuous(labels = comma)
 
+ggplot(df) + geom_col(aes(x=Year,y=new_deaths)) +
+  labs(title = "Covid-19 Deaths By Year") +
+  scale_y_continuous(labels = comma)
 ```
 
 ### Plot of Daily new_cases and new_deaths
