@@ -15,6 +15,7 @@ library(scales)
 library(RSQLite)
 library(plotly)
 library(forecast)
+library(timetk)
 theme_set(theme_linedraw())
 ```
 
