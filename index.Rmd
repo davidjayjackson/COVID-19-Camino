@@ -19,7 +19,7 @@ library(timetk)
 theme_set(theme_linedraw())
 ```
 
-## Spain's Battle with COVID-19
+## Spain's Battle with COVID-19 (Previous 365 days)
 
 ```{r}
 rm(list=ls())
@@ -27,14 +27,14 @@ source("../DATA/movavg.R")
 
 db <- dbConnect(SQLite(), dbname="../COVID-19-DB/OURWORLD.sqlite3")
 df <- dbGetQuery(db,"select * from OWID")
-df <- subset(df,location =="Spain"  )
+df <- subset(df,location =="Spain" & date >=Sys.Date() -365 )
 df$date <- as.Date(df$date)
 sum(df$new_cases,na.rm = TRUE)
 sum(df$new_deaths,na.rm=TRUE)
 
 ```
 ```{r}
-US <- subset(df,date >=Sys.Date() - 365)
+US <- subset(df,date >="2020-04-01" & new_cases >=1)
 US <- US[order(US$date,decreasing = TRUE),]
 US$MAC <- ma(US$new_cases,7,centre=TRUE)
 US$MAD <- ma(US$new_deaths,7,centre=TRUE)
